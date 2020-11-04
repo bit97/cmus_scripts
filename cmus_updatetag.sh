@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# allows to update currently playing track's metadata
+# it launch album art retrieval after the update
+
 function parse {
 	input=$1
 	title=$(echo "$input" | cut -d "|" -f 1)
@@ -33,7 +36,7 @@ function err {
 
 is_running || err "cmus is not playing any track"
 
-apply_tag="$HOME/scripts/tag.sh"
+apply_tag="tag.sh"
 file=$(cmus-remote --query | sed -n 's/^file //p')
 
 tags=$(

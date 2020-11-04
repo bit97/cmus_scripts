@@ -9,11 +9,12 @@
 - sacad
 - mediainfo
 - ffmpeg
+- yad
 
 
 ## Other configs
 
-Note: the scripts folder **should** be included in your PATH env variable.
+Note: the scripts folder should be included in your PATH env variable.
 
 ### cmus
 binds **q** key to *cmus_quit.sh* script
@@ -26,7 +27,19 @@ set status_display_program=update_polybar.sh
 ```
 
 ### Polybar
+```
+[module/cmus]
+type = custom/ipc
+hook-0 = cat $HOME/.config/cmus/cmus_output
+initial = 1
+format-prefix = "CMUS: "
+format-prefix-foreground = ${colors.blue}
+click-left = cmus-remote --prev
+click-middle = cmus-remote --pause
+click-right = cmus-remote --next
+```
 
+and [Enable IPC](https://github.com/polybar/polybar/wiki/Module:-ipc)
 
 ## Contribute
 
