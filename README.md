@@ -5,6 +5,10 @@
 
 - polybar
 - feh
+- notify-send
+- sacad
+- mediainfo
+- ffmpeg
 
 
 ## Other configs
@@ -12,9 +16,20 @@
 Note: the scripts folder **should** be included in your PATH env variable.
 
 ### cmus
-bind **q** key to *cmus_quit.sh* script
+binds **q** key to *cmus_quit.sh* script
 ```
 bind -f common q shell cmus_quit.sh && cmus-remote -C quit
 ```
+allows the *cmus_image.sh* script and the polybar update to run on playback activities (play/pause/change track)
+```
+set status_display_program=update_polybar.sh
+```
 
 ### Polybar
+
+
+## Contribute
+
+This project contains surely a number of bugs/unefficient code. Pardon me, is a lazy weekend's set of scripts.
+
+Please open an issue if you find some bugs or need more clarifications
