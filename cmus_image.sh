@@ -37,7 +37,7 @@ if [ $? -ne 0 ]; then
 	echo "missing"
 	# this is the default album art, feel free to download one you like and to change its path
 	cp $HOME/Immagini/music.jpg $HOME/.config/cmus/file.jpg
-	download_art.sh "$file" &
+	[ $(cat $HOME/.config/cmus/scripts/cmus_offline.status) -eq 1 ] && download_art.sh "$file" &
 fi
 
 # generate the composite wallpaper

@@ -10,3 +10,5 @@ if ! pgrep -x cmus ; then
 else
   cmus-remote --pause
 fi
+
+#echo 1 > $HOME/.config/cmus/scripts/cmus_offline.status

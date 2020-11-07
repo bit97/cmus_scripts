@@ -11,7 +11,10 @@ do
   shift
 done
 
-echo "$_title $_artist" > "$opFile"
+download_icon=""
+[ $(cat $HOME/.config/cmus/scripts/cmus_offline.status) -eq 0 ] && download_icon=" "
+
+echo "$download_icon$_title $_artist" > "$opFile"
 
 sleep 0.2
 
