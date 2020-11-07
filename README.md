@@ -43,6 +43,6 @@ and [Enable IPC](https://github.com/polybar/polybar/wiki/Module:-ipc)
 
 ## Contribute
 
-This project contains surely a number of bugs/unefficient code. Pardon me, is a lazy weekend's set of scripts.
+This project may contain a number of bugs/unefficient code.
 
 Please open an issue if you find some bugs or need more clarifications
