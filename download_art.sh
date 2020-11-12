@@ -5,6 +5,8 @@
 
 album=$(mediainfo "$1" | sed -n 's/^Album.*://p' | head -n 1)
 artist=$(mediainfo "$1" | sed -n 's/^Performer.*://p' | head -n 1)
+# remove feat from artist name
+artist="${artist%% feat*}"
 
 [ -z $album ] && [ -z $artist ] && notify-send "Missing album and artist info.. not downloading cover art" && exit 0
 
@@ -17,7 +19,7 @@ file=$(cmus-remote --query | sed -n 's/^file //p')
 
 [ "$file" == "$1" ] || exit 0
 
-notify-send "downloading ${1} album art"
+notify-send "downloading ${artist} - ${album} album art"
 
 query="${artist} ${album}"
 
