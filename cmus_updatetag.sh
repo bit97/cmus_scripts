@@ -22,6 +22,20 @@ function print {
 	echo "year=$year"
 }
 
+function retrieve_tag {
+	file="${1}"
+	tags=$(ffprobe -hide_banner -loglevel warning -show_format -print_format json "$file" | jq .format.tags)
+
+	jq <<< "$tags"
+
+	title=$(jq -r 'select(.title != null) | .title' <<< "$tags")
+	artist=$(jq -r 'select(.artist != null) | .artist' <<< "$tags")
+	album=$(jq -r 'select(.album != null) | .album' <<< "$tags")
+	track=$(jq -r 'select(.track != null) | .track' <<< "$tags" | cut -d "/" -f1)
+  genre=$(jq -r 'select(.genre != null) | .genre' <<< "$tags")
+  year=$(jq -r 'select(.year != null) | .year' <<< "$tags")
+}
+
 function is_running {
 	status=$(cmus-remote --query 2>/dev/null | sed -n 's/^status //p')
 	[[ $? -eq 0 && $status == "playing" ]]
@@ -39,14 +53,16 @@ is_running || err "cmus is not playing any track"
 apply_tag="tag.sh"
 file=$(cmus-remote --query | sed -n 's/^file //p')
 
+retrieve_tag "$file"
+
 tags=$(
 	yad --title "cmus tagger" --form \
-		--field=title \
-		--field=artist \
-		--field=album \
-		--field="track number" \
-		--field=year:NUM \
-		--field=genre
+		--field=title "$title" \
+		--field=artist "$artist" \
+		--field=album "$album" \
+		--field="track number" "$track"  \
+		--field=year:NUM "$year" \
+		--field=genre "$genre"
 )
 
 [ $? -ne 0 ] && err "form was closed"
