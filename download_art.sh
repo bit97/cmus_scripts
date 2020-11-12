@@ -6,6 +6,8 @@
 album=$(mediainfo "$1" | sed -n 's/^Album.*://p' | head -n 1)
 artist=$(mediainfo "$1" | sed -n 's/^Performer.*://p' | head -n 1)
 
+[ -z $album ] && [ -z $artist ] && notify-send "Missing album and artist info.. not downloading cover art" && exit 0
+
 # avoid to start a big number of processes while skipping a big number of tracks
 sleep 5
 
