@@ -64,6 +64,7 @@ tags=$(
 		--field="track number" "$track"  \
 		--field=year:NUM "$year" \
 		--field=genre "$genre" \
+		--button="Submit:0" \
 )
 
 [ $? -ne 0 ] && err "form was closed"
