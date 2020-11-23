@@ -60,9 +60,10 @@ tags=$(
 		--field=title "$title" \
 		--field=artist "$artist" \
 		--field=album "$album" \
+		--button='Suggest album':"fetch-album.sh \"$artist\" \"$title\"" \
 		--field="track number" "$track"  \
 		--field=year:NUM "$year" \
-		--field=genre "$genre"
+		--field=genre "$genre" \
 )
 
 [ $? -ne 0 ] && err "form was closed"

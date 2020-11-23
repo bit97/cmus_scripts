@@ -42,12 +42,12 @@ shift $((OPTIND - 1))
 file="$1"
 [ ! -f "$file" ] && echo "Provide file to tag." && err
 
-[ -z "$title" ] && echo "Enter a title." && read -r title
-[ -z "$artist" ] && echo "Enter an artist." && read -r artist
-[ -z "$album" ] && echo "Enter an album." && read -r album
-[ -z "$year" ] && echo "Enter album year of publication." && read -r year
-[ -z "$track" ] && echo "Enter a track number." && read -r track
-[ -z "$genre" ] && echo "Enter genre." && read -r genre
+#[ -z "$title" ] && echo "Enter a title." && read -r title
+#[ -z "$artist" ] && echo "Enter an artist." && read -r artist
+#[ -z "$album" ] && echo "Enter an album." && read -r album
+#[ -z "$year" ] && echo "Enter album year of publication." && read -r year
+#[ -z "$track" ] && echo "Enter a track number." && read -r track
+#[ -z "$genre" ] && echo "Enter genre." && read -r genre
 
 temp="${file%.*}.temp.${file##*.}"
 

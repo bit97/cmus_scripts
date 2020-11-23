@@ -6,7 +6,7 @@
 
 if ! pgrep -x cmus ; then
 	polybar cmusBar -r &
-  urxvt -name "cmus" -e cmus
+	urxvt -name "cmus" -e cmus
 else
   cmus-remote --pause
 fi
