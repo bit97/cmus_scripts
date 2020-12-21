@@ -41,6 +41,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # generate the composite wallpaper
+echo "original wallpaper: $ORIGINAL_WALLPAPER"
 gm composite -gravity Center $HOME/.config/cmus/file.jpg "$ORIGINAL_WALLPAPER" $HOME/.config/cmus/result.jpg
 
 feh --bg-fill $HOME/.config/cmus/result.jpg
