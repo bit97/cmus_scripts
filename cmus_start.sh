@@ -5,7 +5,8 @@
 # otherwise, the media player status is toggled
 
 if pgrep -x mpsyt ; then
-  echo 'cycle pause' | socat - /tmp/mpsyt-mpvzpur7is1.sock
+  socket=$(find /tmp -maxdepth 1 -type s | head -n1)
+  echo 'cycle pause' | socat - $socket
 elif ! pgrep -x cmus ; then
 	polybar cmusBar -r &
 	alacritty --class cmus -e cmus
