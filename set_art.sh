@@ -18,7 +18,7 @@ function validate {
 url=$(dragon-drag-and-drop --target --and-exit)
 validate $url || exit 1
 
-prefix=\$HOME/.config/cmus/arts
+prefix=$HOME/.config/cmus/arts
 filename=$(basename $url)
 wget --directory-prefix=$prefix $url
 
