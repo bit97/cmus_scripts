@@ -19,8 +19,9 @@ done <<< "$(
               --exact \
               --marker=* \
               --color=16 \
+              --bind ctrl-a:toggle-all \
               --preview='
-                mediainfo {+} |\
+                mediainfo {} |\
                  egrep -i "^(artist|title|track name|album|performer|format)\s+:" |\
                  sort |\
                  uniq |\
