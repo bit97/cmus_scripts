@@ -4,7 +4,7 @@
 # if there are no running instance of it, the polybar bar is shown and cmus starts
 # otherwise, the media player status is toggled
 
-if pgrep -x mpsyt ; then
+if pgrep -x mpv ; then
   socket=$(find /tmp -maxdepth 1 -type s | head -n1)
   echo 'cycle pause' | socat - $socket
 elif ! pgrep -x cmus ; then
