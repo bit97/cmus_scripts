@@ -24,9 +24,18 @@ function print {
 
 function retrieve_tag {
 	file="${1}"
-	tags=$(ffprobe -hide_banner -loglevel warning -show_format -print_format json "$file" | jq .format.tags)
+	ext=$(ffprobe -hide_banner -loglevel warning -show_format -show_streams -print_format json "$file" |\
+	       jq .format.format_name |\
+	       tr -d \")
+	tags=$(ffprobe -hide_banner -loglevel warning -show_format -show_streams -print_format json "$file")
 
-	jq <<< "$tags"
+	if [ $ext == "ogg" ]; then
+	  tags=$(jq -r '.streams[0].tags' <<< $tags)
+  else
+    tags=$(jq -r '.tags' <<< $tags)
+  fi
+
+  jq <<< $tags
 
 	title=$(jq -r 'select(.title != null) | .title' <<< "$tags")
 	artist=$(jq -r 'select(.artist != null) | .artist' <<< "$tags")
