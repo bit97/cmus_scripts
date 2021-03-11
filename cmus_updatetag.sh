@@ -29,10 +29,12 @@ function retrieve_tag {
 	       tr -d \")
 	tags=$(ffprobe -hide_banner -loglevel warning -show_format -show_streams -print_format json "$file")
 
+  echo $ext
+
 	if [ $ext == "ogg" ]; then
 	  tags=$(jq -r '.streams[0].tags' <<< $tags)
   else
-    tags=$(jq -r '.tags' <<< $tags)
+    tags=$(jq -r '.format.tags' <<< $tags)
   fi
 
   jq <<< $tags
