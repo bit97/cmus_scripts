@@ -7,7 +7,10 @@
 
 feh --bg-fill "$(cat $HOME/.config/wal/last-bg)"
 
-[ $(pgrep --count polybar) -gt 1 ] \
-	&& polybar-msg -p $(pgrep --newest polybar) cmd quit
+pid=`ps -o pid,args -C "polybar" | grep cmus | cut -d " " -f2`
+
+for p in $pid; do
+  polybar-msg -p ${p} cmd quit
+done
 
 exit 0

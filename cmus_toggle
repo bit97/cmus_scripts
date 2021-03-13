@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# toggle polybar bar's visibility
+# TODO: check if it is really the cmus bar
+
+pid=`ps -o pid,args -C "polybar" | grep cmus | cut -d " " -f2`
+
+for p in $pid; do
+  polybar-msg -p ${p} cmd toggle
+done
