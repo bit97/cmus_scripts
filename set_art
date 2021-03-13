@@ -29,6 +29,6 @@ ffmpeg -i "$file" -i "$prefix/$filename" -y -map 0 -map 1 \
   -codec copy -disposition:v:0 attached_pic -map_metadata 0 "$temp" \
   && mv -f "$temp" "$file" \
   && notify-send "Set album art" \
-  && cmus_image.sh
+  && cmus_image
 
 exit 0

@@ -61,7 +61,7 @@ function err {
 
 is_running || err "cmus is not playing any track"
 
-apply_tag="tag.sh"
+apply_tag="tag"
 file=$(cmus-remote --query | sed -n 's/^file //p')
 
 retrieve_tag "$file"
@@ -71,7 +71,7 @@ tags=$(
 		--field=title "$title" \
 		--field=artist "$artist" \
 		--field=album "$album" \
-		--button='Suggest album':"fetch-album.sh \"$artist\" \"$title\"" \
+		--button='Suggest album':"fetch-album \"$artist\" \"$title\"" \
 		--field="track number" "$track"  \
 		--field=year:NUM "$year" \
 		--field=genre "$genre" \

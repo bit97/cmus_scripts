@@ -37,6 +37,6 @@ ffmpeg -i "$file" -i "$cover" -y -map 0 -map 1 \
 	-codec copy -disposition:v:0 attached_pic -map_metadata 0 "$temp" \
 	&& mv -f "$temp" "$file" \
 	&& notify-send "Added album art for ${album}" \
-	&& cmus_image.sh
+	&& cmus_image
 
 exit 0

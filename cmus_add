@@ -11,6 +11,7 @@ MUSIC_DIR="/media/DATA/Music"
 MUSIC_EXT=".*(mp3|mp4|ogg|opus|webm|m4a|flac|wav|wma|aac)$"
 
 while read -r track; do
+  [ -z $track ] && break
   cmus-remote -q "$track"
 done <<< "$(
             find ${MUSIC_DIR} -type f -regextype posix-extended -iregex $MUSIC_EXT |\

@@ -3,45 +3,48 @@
 # update the wallpaper with the addition of the currently playing track's album art
 # downloads it if not present
 
-ORIGINAL_WALLPAPER="$(cat $HOME/.config/wal/last-bg)"
+ORIGINAL_WALLPAPER=`(cat $HOME/.config/wal/last-bg)`
+DEFAULT_ART=$HOME/Immagini/music.jpg
+ALBUM_ART=$HOME/.config/cmus/art.jpg
+EDITED_WALLPAPER=$HOME/.config/cmus/bg.jpg
 
-h=$(mediainfo "$ORIGINAL_WALLPAPER" | grep Height | sed 's|[^0-9]||g')
-let "h=h/3"
+PLAYBACK_STATUS=$HOME/.config/cmus/scripts/cmus_offline.status
+
 
 if ! cmus-remote -C >/dev/null 2>&1 ; then
-    echo >&2 "cmus is not running"
     exit 1
 fi
 
-info=$(cmus-remote --query)
+h=`mediainfo "${ORIGINAL_WALLPAPER}" | grep Height | sed 's|[^0-9]||g'`
+let "h=h/3"
 
-rm -f $HOME/.config/cmus/art.jpg
+info=`cmus-remote --query`
 
-state=$(echo "$info" | sed -n 's/^status //p')
+rm -f "${ALBUM_ART}"
+
+state=`echo "$info" | sed -n 's/^status //p'`
 if [ "$state" = "stopped" ]||[ "$state" = "paused" ] ; then
-    feh --bg-fill "$ORIGINAL_WALLPAPER"
-    echo >&2 "no song playing currently, aborting!"
+    feh --bg-fill "${ORIGINAL_WALLPAPER}"
     exit 1
 fi
 
-rm $HOME/.config/cmus/file.jpg
+rm -f "${ALBUM_ART}"
 
-file=$(echo "$info" | sed -n 's/^file //p')
+file=`echo "$info" | sed -n 's/^file //p'`
 # extract album art
-ffmpeg -i "$file" -filter:v scale=-1:$h -an $HOME/.config/cmus/file.jpg
+ffmpeg -i "$file" -filter:v scale=-1:$h -an "${ALBUM_ART}"
 
-ls $HOME/.config/cmus/file.jpg > /dev/null
+ls "${ALBUM_ART}" > /dev/null
 
 # kill other cover downloading operations
 if [ $? -ne 0 ]; then
-	echo "missing"
 	# this is the default album art, feel free to download one you like and to change its path
-	cp $HOME/Immagini/music.jpg $HOME/.config/cmus/file.jpg
-	[ $(cat $HOME/.config/cmus/scripts/cmus_offline.status) -eq 1 ] && download_art.sh "$file" &
+	cp "${DEFAULT_ART}" "${ALBUM_ART}"
+	convert "${ALBUM_ART}" -resize x${h} "${ALBUM_ART}"
+	[ `cat "${PLAYBACK_STATUS}"` -eq 1 ] && download_art "$file" &
 fi
 
 # generate the composite wallpaper
-echo "original wallpaper: $ORIGINAL_WALLPAPER"
-gm composite -gravity Center $HOME/.config/cmus/file.jpg "$ORIGINAL_WALLPAPER" $HOME/.config/cmus/result.jpg
+gm composite -gravity Center "${ALBUM_ART}" "${ORIGINAL_WALLPAPER}" "${EDITED_WALLPAPER}"
 
-feh --bg-fill $HOME/.config/cmus/result.jpg
+feh --bg-fill "${EDITED_WALLPAPER}"
