@@ -25,6 +25,8 @@ wget --directory-prefix=$prefix $url
 file=$(cmus-remote --query | sed -n 's/^file //p')
 temp="${file%.*}.temp.${file##*.}"
 
+echo $temp
+
 ffmpeg -i "$file" -i "$prefix/$filename" -y -map 0 -map 1 \
   -codec copy -disposition:v:0 attached_pic -map_metadata 0 "$temp" \
   && mv -f "$temp" "$file" \
