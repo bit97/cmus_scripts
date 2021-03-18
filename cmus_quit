@@ -5,6 +5,10 @@
 # TODO: check if it is really the cmus bar
 # restore the wallpaper: path to your original wallpaper
 
+# Bug in cmus: long time in closing while song is paused -> unpause first
+cmus-remote -Q | grep paused >/dev/null && cmus-remote --pause
+cmus-remote -C quit
+
 feh --bg-fill "$(cat $HOME/.config/wal/last-bg)"
 
 pid=`ps -o pid,args -C "polybar" | grep cmus | cut -d " " -f2`
